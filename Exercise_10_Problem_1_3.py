@@ -13,10 +13,8 @@ import pandas as pd
 
 
 # YOUR CODE HERE 1 to read the data
-fp = "data/shopping_centers.txt"
-data = pd.read_csv(fp, sep = ',',header = None)
-data.index.name = 'id'
-data.columns=['name', 'addr']
+fp = r'shopping_centers.txt'
+data = pd.read_csv(fp, sep = ',',names = ['id','name','addr'])
 #TEST COEE
 # Check your input data
 print(data)
