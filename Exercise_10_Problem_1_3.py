@@ -9,6 +9,7 @@
 # Import modules
 import geopandas as gpd
 import pandas as pd
+from pyproj import CRS
 # Read the data (replace "None" with your own code)
 
 
@@ -27,7 +28,7 @@ from geopandas.tools import geocode
 
 # Geocode addresses using Nominatim. Remember to provide a custom "application name" in the user_agent parameter!
 #YOUR CODE HERE 2 for geocoding
-
+geo = geocode(data['addr'], provider='nominatim', user_agent='application name')
 #TEST CODE
 # Check the geocoded output
 print(geo)
@@ -40,7 +41,7 @@ print(type(geo))
 # Check that the coordinate reference system of the geocoded result is correctly defined, and **reproject the layer into JGD2011** (EPSG:6668):
 
 # YOUR CODE HERE 3 to set crs.
-
+geo = geo.to_crs(CRS.from_epsg(3879))
 #TEST CODE
 # Check layer crs
 print(geo.crs)
@@ -48,6 +49,7 @@ print(geo.crs)
 
 # YOUR CODE HERE 4 to join the tables
 geodata = None
+geodata = geo.join(data)
 
 #TEST CODE
 # Check the join output
@@ -59,7 +61,8 @@ print(geodata.head())
 # Define output filepath
 out_fp = None
 # YOUR CODE HERE 5 to save the output
-
+out_fp = r"shopping_centers.shp"
+geodata.to_file(out_fp)
 # TEST CODE
 # Print info about output file
 print("Geocoded output is stored in this file:", out_fp)
